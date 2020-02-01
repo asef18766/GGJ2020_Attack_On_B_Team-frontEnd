@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 3247737555234909284}
   - component: {fileID: 3247737555234909287}
-  - component: {fileID: 3247737555234909285}
+  - component: {fileID: 3145997800262198135}
+  - component: {fileID: 8893851694138839316}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -47,7 +48,20 @@ MonoBehaviour:
   ip: 127.0.0.1
   port: 8787
   bufferSize: 65535
---- !u!114 &3247737555234909285
+--- !u!114 &3145997800262198135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247737555234909286}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbfcbadb6f9839e4e8e1a60082b68367, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  filename: RepairerData.json
+--- !u!114 &8893851694138839316
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
