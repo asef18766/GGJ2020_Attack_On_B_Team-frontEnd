@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public class Notify : MonoBehaviour
+public static class Notify : MonoBehaviour
 {
     #region singlton
     public Notify ins
