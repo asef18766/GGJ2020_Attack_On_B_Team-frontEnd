@@ -30,6 +30,7 @@ public class NotificationCenter : MonoBehaviour
 
     private Socket _clientSocket;
     private byte[] _recieveBuffer;
+    private byte[] _lengthBuffer = new byte[4];
     private Dictionary<String, List<Handler>> handlers = new Dictionary<string, List<Handler>>();
 
     public void SetupClient()
@@ -53,26 +54,28 @@ public class NotificationCenter : MonoBehaviour
             Debug.Log(ex.Message);
         }
 
-        this._clientSocket.BeginReceive(this._recieveBuffer, 0, this._recieveBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
-
+        this._clientSocket.BeginReceive(this._lengthBuffer, 0, this._lengthBuffer.Length, SocketFlags.None, new AsyncCallback(HandleEvent), null);
     }
 
-    private void ReceiveCallback(IAsyncResult AR)
+
+
+    private void HandleEvent(IAsyncResult AR)
     {
         // Check how much bytes are recieved and call EndRecieve to finalize handshake
         int recieved = this._clientSocket.EndReceive(AR);
 
         if(recieved <= 0)
+        {
+            this._clientSocket.BeginReceive(this._lengthBuffer, 0, this._lengthBuffer.Length, SocketFlags.None, new AsyncCallback(HandleEvent), null);
             return;
-
-        // Copy the recieved data into new buffer , to avoid null bytes
-        byte[] recData = new byte[recieved];
-        Buffer.BlockCopy(this._recieveBuffer, 0, recData, 0, recieved);
+        }
 
         // Process data
 
         // get event data
-        string recStr = System.Text.Encoding.UTF8.GetString(recData);
+        int len = BitConverter.ToInt32(this._lengthBuffer, 0);
+        this._clientSocket.Receive(this._recieveBuffer, 0, len, SocketFlags.None);
+        string recStr = System.Text.Encoding.UTF8.GetString(this._recieveBuffer);
         JObject jo = JObject.Parse(recStr);
         string eventType = jo["event"].Value<String>();
 
@@ -102,7 +105,7 @@ public class NotificationCenter : MonoBehaviour
         }
 
         // Start receiving again
-        this._clientSocket.BeginReceive(this._recieveBuffer, 0, this._recieveBuffer.Length, SocketFlags.None, new AsyncCallback(ReceiveCallback), null);
+        this._clientSocket.BeginReceive(this._lengthBuffer, 0, this._lengthBuffer.Length, SocketFlags.None, new AsyncCallback(HandleEvent), null);
     }
 
     public void SendData(object obj)
