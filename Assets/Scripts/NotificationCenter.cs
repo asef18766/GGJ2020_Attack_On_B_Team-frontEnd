@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net;
@@ -89,7 +90,7 @@ public class NotificationCenter : MonoBehaviour
             for(int i = 0; i < l.Count; i++)
             {
                 // no specific target
-                if(targetId == null)
+                if(targetId == null || l[i].uuid == null)
                     l[i].handle(jo);
                 // target matched
                 else if (targetId.Equals(l[i].uuid))
@@ -107,6 +108,11 @@ public class NotificationCenter : MonoBehaviour
     public void SendData(object obj)
     {
         byte[] data = System.Text.Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(obj));
+        byte[] lenBytes = BitConverter.GetBytes(data.Length);
+        // if(BitConverter.IsLittleEndian)
+        //     Array.Reverse(lenBytes);
+        data = lenBytes.Concat(data).ToArray();
+
         SocketAsyncEventArgs socketAsyncData = new SocketAsyncEventArgs();
         socketAsyncData.SetBuffer(data, 0, data.Length);
         this._clientSocket.SendAsync(socketAsyncData);

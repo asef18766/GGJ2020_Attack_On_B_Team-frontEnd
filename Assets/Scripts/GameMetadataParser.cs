@@ -24,6 +24,13 @@ public class GameMetadataParser : MonoBehaviour
 
     public void Setup()
     {
+        if(_ins != null)
+        {
+            Debug.LogError($"Multiple {this.GetType()} were instantiated");
+            return;
+        }
+        _ins = this;
+
         this.datas = new List<GameMetadata>();
         // read file
         string content = File.ReadAllText($"Assets/{this.filename}");
