@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class MatchBtn : MonoBehaviour
 {
     public Notify notify;
-    
+
     private string playerName;
     // Start is called before the first frame update
     void Start()
@@ -20,6 +20,7 @@ public class MatchBtn : MonoBehaviour
     }
 
     public void btnClick(){
+        playerName = GetComponentInChildren<InputField>().text; 
         notify.SendData(playerName);
     }
 }
