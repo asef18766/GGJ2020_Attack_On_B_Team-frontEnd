@@ -4,13 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 public class MatchBtn : MonoBehaviour
 {
-    public Notify notify;
+    public NotificationCenter notificationCenter;
+    public GameObject particleSys;
+    public InputField input;
+
+    Animator ani;
 
     private string playerName;
     // Start is called before the first frame update
     void Start()
     {
-        playerName = GetComponentInChildren<InputField>().text; 
+        playerName = input.text; 
+        ani = GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -20,7 +25,9 @@ public class MatchBtn : MonoBehaviour
     }
 
     public void btnClick(){
-        playerName = GetComponentInChildren<InputField>().text; 
-        notify.SendData(playerName);
+        particleSys.SetActive(true);
+        ani.SetTrigger("Match");
+        playerName = input.text; 
+        notificationCenter.SendData(playerName);
     }
 }
