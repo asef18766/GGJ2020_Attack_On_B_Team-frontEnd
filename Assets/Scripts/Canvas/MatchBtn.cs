@@ -20,17 +20,13 @@ public class MatchBtn : MonoBehaviour
         ani = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void btnClick()
     {
+        playerName = input.text;
+        if(playerName.Equals(""))
+            return;
         particleSys.SetActive(true);
         ani.SetTrigger("Match");
-        playerName = input.text;
 
         JObject sent = new JObject();
         sent.Add("event", "connect");
