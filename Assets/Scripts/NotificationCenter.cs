@@ -29,7 +29,7 @@ public class NotificationCenter : MonoBehaviour
 
     private Socket _clientSocket;
     private byte[] _recieveBuffer;
-    private Dictionary<String, List<Action<JObject>>> handlers = new Dictionary<string, List<Action<JObject>>>();
+    private Dictionary<String, List<Handler>> handlers = new Dictionary<string, List<Handler>>();
 
     public void SetupClient()
     {
@@ -83,9 +83,21 @@ public class NotificationCenter : MonoBehaviour
         else
         {
             // get list of handler
-            List<Action<JObject>> l = this.handlers[eventType];
+            List<Handler> l = this.handlers[eventType];
+            string targetId = jo["uuid"]?.Value<String>();
             // trigger them
-            for(int i = 0; i < l.Count; i++) l[i](jo);
+            for(int i = 0; i < l.Count; i++)
+            {
+                // no specific target
+                if(targetId == null)
+                    l[i].handle(jo);
+                // target matched
+                else if (targetId.Equals(l[i].uuid))
+                {
+                    l[i].handle(jo);
+                    break;
+                }
+            }
         }
 
         // Start receiving again
@@ -100,12 +112,12 @@ public class NotificationCenter : MonoBehaviour
         this._clientSocket.SendAsync(socketAsyncData);
     }
 
-    public void RegisterHandler(string eventType, Action<JObject> handlerFunc)
+    public void RegisterHandler(string eventType, Action<JObject> handle, string uuid = null)
     {
         if(!this.handlers.ContainsKey(eventType))
         {
-            this.handlers.Add(eventType, new List<Action<JObject>>());
+            this.handlers.Add(eventType, new List<Handler>());
         }
-        this.handlers[eventType].Add(handlerFunc);
+        this.handlers[eventType].Add(new Handler(uuid, handle));
     }
 }
