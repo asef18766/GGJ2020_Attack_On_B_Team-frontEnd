@@ -10,14 +10,14 @@ using UnityEngine;
 public class NotificationCenter : MonoBehaviour
 {
     #region singlton
-    public NotificationCenter ins
+    public static NotificationCenter ins
     {
         get
         {
             return _ins;
         }
     }
-    private NotificationCenter _ins = null;
+    private static NotificationCenter _ins = null;
     #endregion
 
     [Tooltip("Server IP address")]
