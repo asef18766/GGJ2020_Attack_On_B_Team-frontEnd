@@ -6,7 +6,7 @@ using Newtonsoft.Json.Linq;
 public class PlayerControl : CharacterControl
 {
     public PlayerKeymap keymap;
-
+    
     private void moveAndRotate()
     {
         // should update
@@ -15,10 +15,10 @@ public class PlayerControl : CharacterControl
         // face
         Vector3 faceTo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
         faceTo.z = 0;
-        faceTo = faceTo.normalized;
-        if(faceTo != this.character.transform.right)
+        faceTo = -faceTo.normalized;
+        if(faceTo != this.character.transform.up)
         {
-            this.character.transform.right = faceTo;
+            this.character.transform.up = faceTo;
             u = true;
         }
 
