@@ -13,5 +13,7 @@ public class GamaManager : MonoBehaviour
 
         // setup
         this.notificationCenter.SetupClient();
+
+        DontDestroyOnLoad(gameObject);
     }
 }
