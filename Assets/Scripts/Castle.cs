@@ -21,6 +21,7 @@ public class Castle : Entity
 
         NotificationCenter.ins.RegisterHandler("fix", OnFixEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("damage", OnDamageEvent, this.uuid);
+        NotificationCenter.ins.RegisterHandler("end_game", OnEndGameEvent);
     }
 
     private void Update()
@@ -55,11 +56,22 @@ public class Castle : Entity
 
     public void OnEndGameEvent(JObject jo)
     {
-        
+        string winner = jo["winner"]?.Value<string>();
+        Debug.Assert(winner != null);
+        OnEndGame(winner);
     }
 
-    public void OnEndGame()
+    public void OnEndGame(string winTeam)
     {
+        // win
+        if(this.team.Equals(winTeam))
+        {
 
+        }
+        // lose
+        else
+        {
+
+        }
     }
 }
