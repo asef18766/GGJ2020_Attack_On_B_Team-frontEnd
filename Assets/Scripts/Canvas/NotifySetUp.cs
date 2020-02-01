@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class NotifySetUp : MonoBehaviour
 {
+    private Notify notify;
     void Start()
     {
         // setup
-        Notify.SetupClient();
+        this.notify = GetComponent<Notify>();
+
+        notify.SetupClient();
     }
 
 }

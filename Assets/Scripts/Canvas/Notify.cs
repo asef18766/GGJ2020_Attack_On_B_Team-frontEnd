@@ -7,17 +7,17 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 
-public static class Notify : MonoBehaviour
+public class Notify : MonoBehaviour
 {
     #region singlton
-    public Notify ins
+    public static Notify ins
     {
         get
         {
             return _ins;
         }
     }
-    private Notify _ins = null;
+    private static Notify _ins = null;
     #endregion
 
     [Tooltip("Server IP address")]
