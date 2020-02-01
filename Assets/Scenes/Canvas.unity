@@ -5443,7 +5443,6 @@ GameObject:
   m_Component:
   - component: {fileID: 855395916}
   - component: {fileID: 855395915}
-  - component: {fileID: 855395914}
   - component: {fileID: 855395913}
   m_Layer: 5
   m_Name: MatchingCanvas
@@ -5469,28 +5468,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &855395914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 855395912}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 1
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 1920, y: 1080}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
 --- !u!223 &855395915
 Canvas:
   m_ObjectHideFlags: 0
@@ -5819,7 +5796,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 498a2b90d05544548becf17237b31d6d, type: 2}
+  - {fileID: 2100000, guid: 06d776a975e380d409d77c6ff56daede, type: 2}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -16213,7 +16190,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DAS GAME
+  m_Text: THE GAME
 --- !u!222 &1842204499
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16277,7 +16254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 906e392254e88490c84d135340d272c8, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9cbc0cfa2beaf2c4d96a6cdb16e1d6ab, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
