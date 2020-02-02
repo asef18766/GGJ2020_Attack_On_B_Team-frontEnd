@@ -10,6 +10,19 @@ public class Castle : Entity
 
     public int hp { get; private set; }
     public int goal { get; private set; }
+    public string _filePath = "";
+
+    Sprite[] sprites = new Sprite[5];
+    void Awake () {
+
+        //sprites = Resources.LoadAll(_filePath, typeof(Sprite));
+    }
+
+    // use this to setup sprites
+    public override void AfterSpawn()
+    {
+        sprites = Resources.LoadAll(_filePath, typeof(Sprite)) as Sprite[];
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +51,7 @@ public class Castle : Entity
 
     public void OnFix(int progress)
     {
+        print(this.hp);
         this.hp = progress;
     }
 
