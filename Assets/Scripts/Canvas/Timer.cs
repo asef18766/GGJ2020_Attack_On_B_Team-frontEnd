@@ -33,10 +33,10 @@ public class Timer : MonoBehaviour
             }
             else{
                 timer_f = 0f;
-                if(currentTime>0 && underEstTime){
+                if(currentTime>14 && underEstTime){
                     currentTime -= 1;
                 }
-                else{
+                else if(currentTime < 0){
                     underEstTime = false;
                     txt.color = Color.red;
                     currentTime += 1;
