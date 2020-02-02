@@ -1,26 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using System.Linq;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 public class PlayerControl : CharacterControl
 {
     public PlayerKeymap keymap;
-    
+
     private void moveAndRotate()
     {
         // should update
         bool u = false;
-
-        // face
-        Vector3 faceTo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        faceTo.z = 0;
-        faceTo = -faceTo.normalized;
-        if(faceTo != this.character.transform.up)
-        {
-            this.character.transform.up = faceTo;
-            u = true;
-        }
 
         // position delta
         Vector3 posDelta = Vector3.zero;
@@ -42,22 +33,38 @@ public class PlayerControl : CharacterControl
         {
             posDelta += Vector3.right * (this.character.speed * Time.deltaTime);
         }
-        // move player
+
         if(posDelta != Vector3.zero)
         {
-            this.character.transform.position += posDelta;
+            // move player
+            this.character.GetComponent<Rigidbody2D>().AddForce(posDelta);
+            // face
+            this.character.transform.up = -posDelta.normalized;
             u = true;
         }
 
         // notify server
-        if(u)
+        // we never need them again, QAQ
+        // if(u)
+        // {
+        //     JObject sent = new JObject();
+        //     sent.Add("event", "move");
+        //     sent.Add("uuid", this.character.uuid);
+        //     sent.Add("location", JObject.Parse(JsonUtility.ToJson(this.character.transform.position)));
+        //     sent.Add("rotation", this.character.transform.rotation.z);
+        //     NotificationCenter.ins.SendData(sent);
+        // }
+    }
+
+    private void attack()
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll((Vector2) this.character.transform.position, this.character.attackRange, Vector2.zero);
+        Character[] cs = hits.Select(h => h.collider.GetComponent<Character>())
+            .Where(c => c != null)
+            .ToArray();
+        foreach (Character c in cs)
         {
-            JObject sent = new JObject();
-            sent.Add("event", "move");
-            sent.Add("uuid", this.character.uuid);
-            sent.Add("location", JObject.Parse(JsonUtility.ToJson(this.character.transform.position)));
-            sent.Add("rotation", this.character.transform.rotation.z);
-            NotificationCenter.ins.SendData(sent);
+            c.Damage();
         }
     }
 
@@ -68,6 +75,7 @@ public class PlayerControl : CharacterControl
 
     void Update()
     {
-        moveAndRotate();
+        this.moveAndRotate();
+        this.attack();
     }
 }
