@@ -18,29 +18,34 @@ public class PlayerControl : CharacterControl
         // vertical
         if(Input.GetKey(this.keymap.up))
         {
-            posDelta += Vector3.up * (this.character.speed * Time.deltaTime);
+            posDelta += Vector3.up;
         }
         else if(Input.GetKey(this.keymap.down))
         {
-            posDelta += Vector3.down * (this.character.speed * Time.deltaTime);
+            posDelta += Vector3.down;
         }
         // horizontal
         if(Input.GetKey(this.keymap.left))
         {
-            posDelta += Vector3.left * (this.character.speed * Time.deltaTime);
+            posDelta += Vector3.left;
         }
         else if(Input.GetKey(this.keymap.right))
         {
-            posDelta += Vector3.right * (this.character.speed * Time.deltaTime);
+            posDelta += Vector3.right;
         }
+        posDelta *= this.character.speed;
 
         if(posDelta != Vector3.zero)
         {
             // move player
-            this.character.GetComponent<Rigidbody2D>().AddForce(posDelta);
+            this.character.GetComponent<Rigidbody2D>().velocity = (posDelta);
             // face
             this.character.transform.up = -posDelta.normalized;
             u = true;
+        }
+        else
+        {
+            this.character.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 
         // notify server
@@ -60,7 +65,7 @@ public class PlayerControl : CharacterControl
     {
         RaycastHit2D[] hits = Physics2D.CircleCastAll((Vector2) this.character.transform.position, this.character.attackRange, Vector2.zero);
         Character[] cs = hits.Select(h => h.collider.GetComponent<Character>())
-            .Where(c => c != null)
+            .Where(c => c != null && !c.team.Equals(this.character.team))
             .ToArray();
         foreach (Character c in cs)
         {
