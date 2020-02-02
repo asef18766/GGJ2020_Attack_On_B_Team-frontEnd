@@ -5,10 +5,28 @@ using Newtonsoft.Json.Linq;
 
 public class Spawner : MonoBehaviour
 {
+    #region singlton
+    public static Spawner ins
+    {
+        get
+        {
+            return _ins;
+        }
+    }
+    private static Spawner _ins = null;
+    #endregion
+
     public GameObject castle;
 
     public void Setup()
     {
+        if(_ins != null)
+        {
+            Debug.LogError($"Multiple {this.GetType()} were instantiated");
+            return;
+        }
+        _ins = this;
+        
         NotificationCenter.ins.RegisterHandler("spawn", this.onSpawn, null);
     }
 
@@ -41,5 +59,6 @@ public class Spawner : MonoBehaviour
         Entity et = go.GetComponent<Entity>();
         et.uuid = uuid;
         et.team = team;
+        et.AfterSpawn();
     }
 }

@@ -17,6 +17,13 @@ public class Castle : Entity
 
         //sprites = Resources.LoadAll(_filePath, typeof(Sprite));
     }
+
+    // use this to setup sprites
+    public override void AfterSpawn()
+    {
+        sprites = Resources.LoadAll(_filePath, typeof(Sprite)) as Sprite[];
+    }
+
     // Start is called before the first frame update
     void Start()
     {
