@@ -10,7 +10,13 @@ public class Castle : Entity
 
     public int hp { get; private set; }
     public int goal { get; private set; }
+    public string _filePath = "";
 
+    Sprite[] sprites = new Sprite[5];
+    void Awake () {
+
+        //sprites = Resources.LoadAll(_filePath, typeof(Sprite));
+    }
     // Start is called before the first frame update
     void Start()
     {
