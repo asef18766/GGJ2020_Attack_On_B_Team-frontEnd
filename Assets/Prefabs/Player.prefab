@@ -155,6 +155,7 @@ MonoBehaviour:
   resourceCapacity: 1000
   speed: 5
   attackRange: 20
+  hp: 50
 --- !u!114 &1548534905021470829
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,7 +183,7 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -2, y: 3}
+  m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 5
 --- !u!50 &1548534905021470831
@@ -231,7 +232,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1548534905421532505}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -2.0010002, y: 3.2943177, z: -90.17935}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1548534905691956659}

@@ -11,7 +11,7 @@ public class Character : Entity
     public float speed;
     public float attackRange;
 
-    private int hp;
+    public int hp;
     private int resource;
 
     public void Attack(int weaponId) {}
