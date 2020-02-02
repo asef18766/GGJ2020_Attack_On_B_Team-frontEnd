@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 072f9a51e3f250c4fb20762a8085e79b
+=======
+guid: d4f0b98fbd41abe489110c6b92e9a49e
+>>>>>>> origin/feat/respawner
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

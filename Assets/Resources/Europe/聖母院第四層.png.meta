@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 262f7149b911b484e84a8a50abc747bf
+=======
+guid: f88d54f1f7753af4bb0646868d189d56
+>>>>>>> origin/feat/respawner
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
