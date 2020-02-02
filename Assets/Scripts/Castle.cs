@@ -38,6 +38,7 @@ public class Castle : Entity
 
     public void OnFix(int progress)
     {
+        print(this.hp);
         this.hp = progress;
     }
 
