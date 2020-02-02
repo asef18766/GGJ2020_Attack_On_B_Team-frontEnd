@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 887034649c9149a48987164e79f203f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip: 127.0.0.1
+  ip: 192.168.43.105
   port: 8787
   bufferSize: 65535
 --- !u!114 &3145997800262198135

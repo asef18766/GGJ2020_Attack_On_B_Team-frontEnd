@@ -17212,6 +17212,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameManager
       objectReference: {fileID: 0}
+    - target: {fileID: 3247737555234909287, guid: b5edb1541f3315243b061ae17aaa346b,
+        type: 3}
+      propertyPath: port
+      value: 8787
+      objectReference: {fileID: 0}
+    - target: {fileID: 3247737555234909287, guid: b5edb1541f3315243b061ae17aaa346b,
+        type: 3}
+      propertyPath: ip
+      value: 192.168.43.105
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5edb1541f3315243b061ae17aaa346b, type: 3}
 --- !u!1 &1784430840
