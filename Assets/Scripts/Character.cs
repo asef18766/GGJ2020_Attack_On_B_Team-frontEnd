@@ -9,7 +9,7 @@ public class Character : Entity
     public int maxHP;
     public int resourceCapacity;
     public float speed;
-    private int hp;
+    public int hp;
     public int resource;
 
     public void Attack(int weaponId) {}
@@ -38,5 +38,20 @@ public class Character : Entity
     {
         NotificationCenter.ins.RegisterHandler("damage", OnDamageEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("kill", OnKillEvent, this.uuid);
+        hp = maxHP ; 
+    }
+    void UpdateHealthEvent()
+    {
+        if(hp <= 0)
+        {
+            print("dead...QAQ");
+            print("instance null:"+(Respawner.ins==null).ToString());
+            Respawner.ins.insert_dead(this);
+            this.gameObject.SetActive(false);
+        }
+    }
+    void Update()
+    {
+        UpdateHealthEvent();
     }
 }
