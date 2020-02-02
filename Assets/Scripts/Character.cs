@@ -9,12 +9,14 @@ public class Character : Entity
     public int maxHP;
     public int resourceCapacity;
     public float speed;
+    public float attackRange;
+
     private int hp;
     private int resource;
 
     public void Attack(int weaponId) {}
     public void Build(string entityType, Vector3 loc) {}
-    public void Collect() {}
+    public void Collect(int amount) {}
     public void Damage() {}
     public void purchase(string itemName) {}
 
