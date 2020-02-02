@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class MatchBtn : MonoBehaviour
 {
-    public NotificationCenter notificationCenter;
+    // public NotificationCenter notificationCenter;
     public GameObject particleSys;
     public InputField input;
 
@@ -31,10 +31,10 @@ public class MatchBtn : MonoBehaviour
         particleSys.SetActive(true);
         ani.SetTrigger("Match");
 
-        JObject sent = new JObject();
-        sent.Add("event", "connect");
-        sent.Add("playerName", playerName);
-        notificationCenter.SendData(sent);
+        // JObject sent = new JObject();
+        // sent.Add("event", "connect");
+        // sent.Add("playerName", playerName);
+        // notificationCenter.SendData(sent);
     }
 
     public void startGame(){

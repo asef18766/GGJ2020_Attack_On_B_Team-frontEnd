@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Newtonsoft.Json.Linq;
+using UnityEngine;
 
 public class Character : Entity
 {
@@ -14,11 +14,15 @@ public class Character : Entity
     public int hp;
     public int resource;
 
-    public void Attack(int weaponId) {}
-    public void Build(string entityType, Vector3 loc) {}
-    public void Collect(int amount) {}
-    public void Damage() {}
-    public void purchase(string itemName) {}
+    public void Attack(int weaponId) { }
+    public void Build(string entityType, Vector3 loc) { }
+    public void Collect(int amount) { }
+    public void Damage()
+    {
+        const int dmg = 10;
+        this.hp -= dmg;
+    }
+    public void purchase(string itemName) { }
 
     public bool UpgradeGenerator()
     {
@@ -40,20 +44,52 @@ public class Character : Entity
     {
         NotificationCenter.ins.RegisterHandler("damage", OnDamageEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("kill", OnKillEvent, this.uuid);
-        hp = maxHP ; 
+        hp = maxHP;
     }
+
     void UpdateHealthEvent()
     {
         if(hp <= 0)
         {
             print("dead...QAQ");
-            print("instance null:"+(Respawner.ins==null).ToString());
+            print("instance null:" + (Respawner.ins == null).ToString());
             Respawner.ins.insert_dead(this);
             this.gameObject.SetActive(false);
         }
     }
+
     void Update()
     {
         UpdateHealthEvent();
+    }
+
+    IEnumerator fix(Castle castle)
+    {
+        const int amount = 10;
+        while(true)
+        {
+            if(this.resource > amount)
+            {
+                castle.OnFix(castle.hp + amount);
+                this.resource -= amount;
+                yield return new WaitForSeconds(1);
+            }
+        }
+    }
+
+    private void OnCollisionStay2D(Collision2D other)
+    {
+        Castle castle = other.gameObject.GetComponent<Castle>();
+        if(castle == null || !castle.team.Equals(this.team)) return;
+
+        StartCoroutine(fix(castle));
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        Castle castle = other.gameObject.GetComponent<Castle>();
+        if(castle == null || !castle.team.Equals(this.team)) return;
+
+        StopCoroutine("fix");
     }
 }
