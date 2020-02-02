@@ -13,10 +13,6 @@ public class Castle : Entity
     public string _filePath = "";
 
     Sprite[] sprites = new Sprite[5];
-    void Awake () {
-
-        //sprites = Resources.LoadAll(_filePath, typeof(Sprite));
-    }
 
     // use this to setup sprites
     public override void AfterSpawn()
