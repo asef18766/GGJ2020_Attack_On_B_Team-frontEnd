@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerControl : CharacterControl
 {
     public PlayerKeymap keymap;
-
+    private Animator animator;
     private void moveAndRotate()
     {
         // should update
@@ -63,6 +63,7 @@ public class PlayerControl : CharacterControl
 
     private void attack()
     {
+        animator.SetTrigger("attack");
         RaycastHit2D[] hits = Physics2D.CircleCastAll((Vector2) this.character.transform.position, this.character.attackRange, Vector2.zero);
         Character[] cs = hits.Select(h => h.collider.GetComponent<Character>())
             .Where(c => c != null && !c.team.Equals(this.character.team))
@@ -76,11 +77,13 @@ public class PlayerControl : CharacterControl
     void Start()
     {
         this.character = GetComponent<Character>();
+        animator = GetComponent<Animator>();
     }
 
     void Update()
     {
         this.moveAndRotate();
-        this.attack();
+        if(Input.GetKeyDown(this.keymap.attack))
+            this.attack();
     }
 }

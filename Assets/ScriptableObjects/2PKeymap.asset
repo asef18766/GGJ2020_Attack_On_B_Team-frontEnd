@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb16a86b43f9f674fb81b06c825eb684, type: 3}
   m_Name: 2PKeymap
   m_EditorClassIdentifier: 
-  up: 0
-  down: 0
-  left: 0
-  right: 0
-  place: 0
-  shop: 0
-  attack: 0
+  up: 273
+  down: 274
+  left: 276
+  right: 275
+  place: 324
+  shop: 325
+  attack: 323
