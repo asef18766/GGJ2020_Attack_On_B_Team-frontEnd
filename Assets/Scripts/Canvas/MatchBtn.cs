@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class MatchBtn : MonoBehaviour
 {
     public NotificationCenter notificationCenter;
     public GameObject particleSys;
     public InputField input;
+
+    public string gameSceneName;
 
     Animator ani;
 
@@ -32,5 +35,14 @@ public class MatchBtn : MonoBehaviour
         sent.Add("event", "connect");
         sent.Add("playerName", playerName);
         notificationCenter.SendData(sent);
+    }
+
+    public void startGame(){
+        ani.SetTrigger("fadeOut");
+        if(!ani.GetCurrentAnimatorStateInfo(0).IsName("YourAnimationName"))
+        {
+            SceneManager.LoadScene(gameSceneName);
+        }
+         
     }
 }
