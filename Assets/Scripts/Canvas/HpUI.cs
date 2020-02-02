@@ -9,6 +9,9 @@ public class HpUI : MonoBehaviour
 
     [SerializeField]
     private Image hp;
+
+    [SerializeField]
+    private Text percentage;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,5 +23,7 @@ public class HpUI : MonoBehaviour
     {
         transform.position = new Vector3(targetPlayer.position.x, targetPlayer.position.y+1.5f, targetPlayer.position.z);
         hp.fillAmount = character.hp /  character.maxHP;
+        percentage.color = hp.color;
+        percentage.text = hp.fillAmount * 100 + "%";
     }
 }
