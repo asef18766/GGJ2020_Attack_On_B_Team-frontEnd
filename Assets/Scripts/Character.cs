@@ -10,7 +10,7 @@ public class Character : Entity
     public int resourceCapacity;
     public float speed;
     private int hp;
-    private int resource;
+    public int resource;
 
     public void Attack(int weaponId) {}
     public void Build(string entityType, Vector3 loc) {}
@@ -18,6 +18,10 @@ public class Character : Entity
     public void Damage() {}
     public void purchase(string itemName) {}
 
+    public bool UpgradeGenerator()
+    {
+        return Input.GetKey(KeyCode.U);
+    }
     public void OnDamageEvent(JObject jo)
     {
         this.hp = jo["healthLeft"].Value<int>();
