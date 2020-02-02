@@ -12,12 +12,13 @@ public class Castle : Entity
     public int goal { get; private set; }
     public string _filePath = "";
 
-    Sprite[] sprites = new Sprite[5];
+    private Sprite[] sprites = new Sprite[5];
+    private SpriteRenderer spriteRenderer;
 
     // use this to setup sprites
     public override void AfterSpawn()
     {
-        sprites = Resources.LoadAll(_filePath, typeof(Sprite)) as Sprite[];
+        sprites = Resources.LoadAll<Sprite>(_filePath);
     }
 
     // Start is called before the first frame update
@@ -31,11 +32,49 @@ public class Castle : Entity
         NotificationCenter.ins.RegisterHandler("fix", OnFixEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("damage", OnDamageEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("end_game", OnEndGameEvent);
+
+        this.spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+
+    // for test
+    private IEnumerator addHp()
+    {
+        while(true)
+        {
+            this.hp += 50;
+            yield return new WaitForSeconds(1);
+        }
     }
 
     private void Update()
     {
         // determine sprite by hp
+        this.spriteRenderer.sprite = this.sprites[0];
+        int spId = (int)(((float)this.hp / this.goal) * (this.sprites.Length - 1));
+        spId = Mathf.Min(this.sprites.Length - 1, spId);
+        print(spId);
+        if(spId > transform.childCount)
+        {
+            print($"generate {spId - transform.childCount} children");
+            for(int i=transform.childCount ; i<spId ; i++)
+            {
+                GameObject go = new GameObject(i.ToString());
+                go.AddComponent<SpriteRenderer>().sprite = this.sprites[i];
+                go.transform.SetParent(transform);
+                go.transform.localPosition = Vector3.zero;
+            }
+        }
+        else if(spId < transform.childCount)
+        {
+            for(int i=transform.childCount-1 ; i>spId ; i--)
+                Destroy(transform.GetChild(i));
+        }
+        
+        // win
+        if(this.hp >= this.goal)
+        {
+            OnEndGame(this.team);
+        }
     }
 
     public void OnFixEvent(JObject jo) 
