@@ -10,7 +10,7 @@ public class Castle : Entity
 
     public int hp { get; private set; }
     public int goal { get; private set; }
-    public string _filePath = "";
+    public string FilePath;
 
     private Sprite[] sprites = new Sprite[5];
     private SpriteRenderer spriteRenderer;
@@ -18,7 +18,7 @@ public class Castle : Entity
     // use this to setup sprites
     public override void AfterSpawn()
     {
-        sprites = Resources.LoadAll<Sprite>(_filePath);
+        sprites = Resources.LoadAll<Sprite>(FilePath);
     }
 
     // Start is called before the first frame update
@@ -33,6 +33,7 @@ public class Castle : Entity
         NotificationCenter.ins.RegisterHandler("damage", OnDamageEvent, this.uuid);
         NotificationCenter.ins.RegisterHandler("end_game", OnEndGameEvent);
 
+        this.AfterSpawn();
         this.spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
@@ -52,14 +53,16 @@ public class Castle : Entity
         this.spriteRenderer.sprite = this.sprites[0];
         int spId = (int)(((float)this.hp / this.goal) * (this.sprites.Length - 1));
         spId = Mathf.Min(this.sprites.Length - 1, spId);
-        print(spId);
         if(spId > transform.childCount)
         {
             print($"generate {spId - transform.childCount} children");
             for(int i=transform.childCount ; i<spId ; i++)
             {
                 GameObject go = new GameObject(i.ToString());
-                go.AddComponent<SpriteRenderer>().sprite = this.sprites[i];
+                SpriteRenderer spr = go.AddComponent<SpriteRenderer>();
+                Debug.Assert(spr != null);
+                spr.sprite = this.sprites[i+1];
+                spr.sortingOrder = this.spriteRenderer.sortingOrder;
                 go.transform.SetParent(transform);
                 go.transform.localPosition = Vector3.zero;
             }
@@ -86,7 +89,6 @@ public class Castle : Entity
 
     public void OnFix(int progress)
     {
-        print(this.hp);
         this.hp = progress;
     }
 

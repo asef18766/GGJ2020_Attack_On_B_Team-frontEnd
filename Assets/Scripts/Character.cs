@@ -14,6 +14,8 @@ public class Character : Entity
     public int hp;
     public int resource;
 
+    private IEnumerator fixCoroutine;
+
     public void Attack(int weaponId) { }
     public void Build(string entityType, Vector3 loc) { }
     public void Collect(int amount) { }
@@ -28,7 +30,7 @@ public class Character : Entity
     {
         return Input.GetKey(KeyCode.U);
     }
-    
+
     public void OnDamageEvent(JObject jo)
     {
         this.hp = jo["healthLeft"].Value<int>();
@@ -73,17 +75,18 @@ public class Character : Entity
             {
                 castle.OnFix(castle.hp + amount);
                 this.resource -= amount;
-                yield return new WaitForSeconds(1);
             }
+            yield return new WaitForSeconds(1);
         }
     }
 
-    private void OnCollisionStay2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other)
     {
         Castle castle = other.gameObject.GetComponent<Castle>();
         if(castle == null || !castle.team.Equals(this.team)) return;
 
-        StartCoroutine(fix(castle));
+        this.fixCoroutine = fix(castle);
+        StartCoroutine(this.fixCoroutine);
     }
 
     private void OnCollisionExit2D(Collision2D other)
@@ -91,6 +94,10 @@ public class Character : Entity
         Castle castle = other.gameObject.GetComponent<Castle>();
         if(castle == null || !castle.team.Equals(this.team)) return;
 
-        StopCoroutine("fix");
+        if(this.fixCoroutine != null)
+        {
+            StopCoroutine(this.fixCoroutine);
+            this.fixCoroutine = null;
+        }
     }
 }
