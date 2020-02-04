@@ -65,11 +65,13 @@ public class PlayerControl : CharacterControl
     {
         animator.SetTrigger("attack");
         RaycastHit2D[] hits = Physics2D.CircleCastAll((Vector2) this.character.transform.position, this.character.attackRange, Vector2.zero);
+        Debug.DrawLine(transform.position, transform.position + transform.up * -this.character.attackRange);
         Character[] cs = hits.Select(h => h.collider.GetComponent<Character>())
             .Where(c => c != null && !c.team.Equals(this.character.team))
             .ToArray();
         foreach (Character c in cs)
         {
+            Debug.Log(c.name);
             c.Damage();
         }
     }
