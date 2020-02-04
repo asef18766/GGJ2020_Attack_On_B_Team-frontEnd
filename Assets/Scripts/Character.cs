@@ -28,6 +28,7 @@ public class Character : Entity
     {
         return Input.GetKey(KeyCode.U);
     }
+    
     public void OnDamageEvent(JObject jo)
     {
         this.hp = jo["healthLeft"].Value<int>();
